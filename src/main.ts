@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: ['*'], // TO DO: com o front pronto, add a url do front
+    origin: true, // TO DO: com o front pronto, add a url do front
   });
 
   app.useGlobalPipes(
