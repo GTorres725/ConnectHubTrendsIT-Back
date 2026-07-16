@@ -1,0 +1,45 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { CreateServiceLogDto } from './dto/create-service-log.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+@Injectable()
+export class ServiceLogService {
+  constructor(private readonly dbPrisma: PrismaService) {}
+
+  async create(createServiceLogDto: CreateServiceLogDto, req) {
+    const { ticketId } = createServiceLogDto;
+    const { userSectorId } = req.user.sectorId;
+    const { userId } = req.user.id;
+
+    const ticketSectorId = await this.dbPrisma.ticket.findFirst({
+      where: { id: ticketId },
+      select: { sectorId: true },
+    });
+
+    if (ticketSectorId.sectorId != userSectorId) {
+      throw new UnauthorizedException(
+        'You do not have permission to make this change.',
+      );
+    }
+
+    return await this.dbPrisma.serviceLog.create({
+      data: { ...createServiceLogDto, userId },
+    });
+  }
+
+  async find(id: number, req) {
+    const { userSectorId } = req.user.sectorId;
+
+    const ticket = await this.dbPrisma.ticket.findFirst({ where: { id } });
+
+    if (ticket.sectorId != userSectorId) {
+      throw new UnauthorizedException(
+        'You do not have permission to make this change.',
+      );
+    }
+
+    return await this.dbPrisma.serviceLog.findMany({
+      where: { ticketId: id },
+    });
+  }
+}

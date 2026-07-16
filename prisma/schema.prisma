@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TicketStatus {
+  pending
+  inProgress
+  carriedOut
+  finalizationApproved
+  unusable
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique()
+  password    String
+  sectorId    Int
+  //
+  sector      Sector       @relation(fields: [sectorId], references: [id])
+  tickets     Ticket[]
+  serviceLogs ServiceLog[]
+}
+
+model Sector {
+  id             Int      @id @default(autoincrement())
+  name           String   @unique()
+  sectorEmployee User[]
+  tickets        Ticket[]
+}
+
+model Ticket {
+  id                    Int          @id @default(autoincrement())
+  title                 String
+  description           String
+  creatorId             Int
+  sectorId              Int
+  status                TicketStatus @default(pending)
+  descriptionConclusion String?
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  //
+  creator               User         @relation(fields: [creatorId], references: [id])
+  sector                Sector       @relation(fields: [sectorId], references: [id])
+  serviceLogs           ServiceLog[]
+}
+
+model ServiceLog {
+  id          Int      @id @default(autoincrement())
+  description String
+  ticketId    Int
+  userId      Int
+  createdAt   DateTime @default(now())
+  //
+  ticket      Ticket   @relation(fields: [ticketId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+}
