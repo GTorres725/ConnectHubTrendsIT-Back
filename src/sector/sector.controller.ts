@@ -20,10 +20,10 @@ export class SectorController {
   //   return this.sectorService.create(createSectorDto);
   // }
 
-  // @Get()
-  // findAll() {
-  //   return this.sectorService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.sectorService.findAll();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
