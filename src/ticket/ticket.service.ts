@@ -39,10 +39,6 @@ export class TicketService {
       where: { sectorId: req.user.sectorId },
     });
 
-    if (find.length == 0) {
-      throw new NotFoundException('There are no tickets for this section.');
-    }
-
     return find;
   }
 
