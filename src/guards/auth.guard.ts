@@ -20,9 +20,11 @@ export class AuthGuard implements CanActivate {
 
       request.tokenPayload = data;
 
-      const { id, name, sectorId } = await this.userService.findOne(data.id);
+      const { id, name, sectorId, email } = await this.userService.findOne(
+        data.id,
+      );
 
-      request.user = { id, name, sectorId };
+      request.user = { id, name, sectorId, email };
 
       return true;
     } catch (_err) {
