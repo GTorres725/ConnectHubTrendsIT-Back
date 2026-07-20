@@ -32,7 +32,7 @@ export class TicketController {
   }
 
   @UseGuards(AuthGuard)
-  @Get()
+  @Get('myTickets')
   findUserCreator(@Req() req) {
     return this.ticketService.findUserCreator(req);
   }
