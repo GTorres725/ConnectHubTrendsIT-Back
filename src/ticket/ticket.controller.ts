@@ -32,6 +32,12 @@ export class TicketController {
   }
 
   @UseGuards(AuthGuard)
+  @Get()
+  findUserCreator(@Req() req) {
+    return this.ticketService.findUserCreator(req);
+  }
+
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,

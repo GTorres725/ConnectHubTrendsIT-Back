@@ -45,6 +45,17 @@ export class TicketService {
   //
   //
 
+  async findUserCreator(req) {
+    const find = await this.dbPrisma.ticket.findMany({
+      where: { creatorId: req.user.id },
+    });
+
+    return find;
+  }
+
+  //
+  //
+
   async update(id: number, updateTicketDto: UpdateTicketDto, req) {
     const userId = req.user.id;
     const userSector = req.user.sectorId;
