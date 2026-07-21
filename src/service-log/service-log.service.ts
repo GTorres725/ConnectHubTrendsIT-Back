@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateServiceLogDto } from './dto/create-service-log.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -11,12 +15,18 @@ export class ServiceLogService {
     const { userSectorId } = req.user.sectorId;
     const { userId } = req.user.id;
 
-    const ticketSectorId = await this.dbPrisma.ticket.findFirst({
+    const ticket = await this.dbPrisma.ticket.findFirst({
       where: { id: ticketId },
       select: { sectorId: true },
     });
 
-    if (ticketSectorId.sectorId != userSectorId) {
+    if (!ticket) {
+      throw new NotFoundException('Ticket not found');
+    }
+
+    const { sectorId } = ticket;
+
+    if (sectorId != userSectorId) {
       throw new UnauthorizedException(
         'You do not have permission to make this change.',
       );

@@ -77,7 +77,7 @@ export class TicketService {
         descriptionConclusion
       ) {
         throw new UnauthorizedException(
-          'You do not have permission to make this change.',
+          'You dont have permission to make this change.',
         );
       }
     }
