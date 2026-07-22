@@ -39,10 +39,11 @@ export class ServiceLogService {
 
   async find(id: number, req) {
     const userSectorId = req.user.sectorId;
+    const userId = req.user.id;
 
     const ticket = await this.dbPrisma.ticket.findFirst({ where: { id } });
 
-    if (ticket.sectorId != userSectorId) {
+    if (ticket.sectorId != userSectorId && userId != ticket.creatorId) {
       throw new UnauthorizedException(
         'You do not have permission to make this change.',
       );
