@@ -12,8 +12,8 @@ export class ServiceLogService {
 
   async create(createServiceLogDto: CreateServiceLogDto, req) {
     const { ticketId } = createServiceLogDto;
-    const { userSectorId } = req.user.sectorId;
-    const { userId } = req.user.id;
+    const userSectorId = req.user.sectorId;
+    const userId = req.user.id;
 
     const ticket = await this.dbPrisma.ticket.findFirst({
       where: { id: ticketId },
@@ -28,7 +28,7 @@ export class ServiceLogService {
 
     if (sectorId != userSectorId) {
       throw new UnauthorizedException(
-        'You do not have permission to make this change.',
+        'You dont have permission to make this change.',
       );
     }
 
