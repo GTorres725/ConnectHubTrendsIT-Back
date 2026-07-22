@@ -37,6 +37,7 @@ export class TicketService {
   async find(req) {
     const find = await this.dbPrisma.ticket.findMany({
       where: { sectorId: req.user.sectorId },
+      orderBy: { createdAt: 'desc' },
     });
 
     return find;
@@ -48,6 +49,7 @@ export class TicketService {
   async findUserCreator(req) {
     const find = await this.dbPrisma.ticket.findMany({
       where: { creatorId: req.user.id },
+      orderBy: { createdAt: 'desc' },
     });
 
     return find;
