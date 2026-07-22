@@ -38,7 +38,7 @@ export class ServiceLogService {
   }
 
   async find(id: number, req) {
-    const { userSectorId } = req.user.sectorId;
+    const userSectorId = req.user.sectorId;
 
     const ticket = await this.dbPrisma.ticket.findFirst({ where: { id } });
 
