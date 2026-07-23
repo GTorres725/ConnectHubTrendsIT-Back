@@ -63,7 +63,7 @@ export class TicketService {
 
   async findUserCreator(req, date) {
     const where: any = {
-      sectorId: req.user.id,
+      creatorId: req.user.id,
     };
 
     if (date) {
