@@ -48,14 +48,6 @@ export class ServiceLogService {
         'You do not have permission to make this change.',
       );
     }
-    console.log(
-      'teste',
-      await this.dbPrisma.serviceLog.findMany({
-        where: { ticketId: id },
-        orderBy: { createdAt: 'desc' },
-        include: { user: { select: { name: true } } },
-      }),
-    );
 
     return await this.dbPrisma.serviceLog.findMany({
       where: { ticketId: id },
