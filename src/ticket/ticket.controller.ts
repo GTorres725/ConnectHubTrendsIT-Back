@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { TicketService } from './ticket.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -27,8 +28,8 @@ export class TicketController {
 
   @UseGuards(AuthGuard)
   @Get()
-  find(@Req() req) {
-    return this.ticketService.find(req);
+  find(@Req() req, @Query('date') date?: string) {
+    return this.ticketService.find(req, date);
   }
 
   @UseGuards(AuthGuard)

@@ -34,9 +34,24 @@ export class TicketService {
   //
   //
 
-  async find(req) {
+  async find(req, date?: string) {
+    const where: any = {
+      sectorId: req.user.sectorId,
+    };
+
+    if (date) {
+      const start = new Date(date);
+      const end = new Date(date);
+      end.setDate(end.getDate() + 1);
+
+      where.createdAt = {
+        gte: start,
+        lt: end,
+      };
+    }
+
     const find = await this.dbPrisma.ticket.findMany({
-      where: { sectorId: req.user.sectorId },
+      where,
       orderBy: { createdAt: 'desc' },
     });
 
