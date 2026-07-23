@@ -42,7 +42,6 @@ export class TicketController {
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    // @Param('userId', ParseIntPipe) userId: number,
     @Body() updateTicketDto: UpdateTicketDto,
     @Req() req,
   ) {

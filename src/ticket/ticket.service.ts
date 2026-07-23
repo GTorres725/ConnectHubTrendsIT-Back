@@ -53,6 +53,7 @@ export class TicketService {
     const find = await this.dbPrisma.ticket.findMany({
       where,
       orderBy: { createdAt: 'desc' },
+      include: { sector: { select: { name: true } } },
     });
 
     return find;
@@ -80,8 +81,8 @@ export class TicketService {
     const find = await this.dbPrisma.ticket.findMany({
       where,
       orderBy: { createdAt: 'desc' },
+      include: { sector: { select: { name: true } } },
     });
-
     return find;
   }
 
