@@ -34,8 +34,8 @@ export class TicketController {
 
   @UseGuards(AuthGuard)
   @Get('myTickets')
-  findUserCreator(@Req() req) {
-    return this.ticketService.findUserCreator(req);
+  findUserCreator(@Req() req, @Query('date') date?: string) {
+    return this.ticketService.findUserCreator(req, date);
   }
 
   @UseGuards(AuthGuard)
