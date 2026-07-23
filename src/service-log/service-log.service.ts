@@ -52,6 +52,7 @@ export class ServiceLogService {
     return await this.dbPrisma.serviceLog.findMany({
       where: { ticketId: id },
       orderBy: { createdAt: 'desc' },
+      include: { user: { select: { name: true } } },
     });
   }
 }

@@ -5,8 +5,6 @@ import {
   Get,
   UseGuards,
   Req,
-  ParseIntPipe,
-  Param,
   // Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -29,8 +27,8 @@ export class UserController {
     return this.userService.find(req);
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.findOne(id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.userService.findOne(id);
+  // }
 }
