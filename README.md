@@ -28,6 +28,11 @@ https://connect-hub-trends-it-front-ldis.vercel.app/
 
 # Telas
 
+<details>
+<summary>Clique para visualizar as telas do sistema</summary>
+
+<br>
+
 ## Login
 
 <img width="624" height="564" alt="image" src="https://github.com/user-attachments/assets/ae5e5140-58a4-4498-879f-79532f82b25d" />
@@ -56,6 +61,8 @@ https://connect-hub-trends-it-front-ldis.vercel.app/
 ## Meus dados e logout
 
 <img width="1088" height="950" alt="image" src="https://github.com/user-attachments/assets/97f52b76-84bb-4c3b-85d2-e0d2c4ebec30" />
+
+</details>
 
 ---
 
