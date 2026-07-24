@@ -8,6 +8,9 @@ O sistema permite a abertura de tickets entre setores, registro de serviços rea
 https://connect-hub-trends-it-front-ldis.vercel.app/
 - Pode haver uma leve demora para a primeira conexão ao servidor devido à hibernação da hospedagem no Render.
 
+## Link para o repositório do Front:
+https://github.com/GTorres725/ConnectHubTrendsIT-Front
+
 ## Índice
 
 - [Telas](#telas)
