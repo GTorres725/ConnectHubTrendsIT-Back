@@ -4,9 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { Prisma } from 'generated/prisma/client';
 
 @Injectable()
 export class UserService {
@@ -16,13 +16,6 @@ export class UserService {
     // eslint-disable-next-line prefer-const
     let { sector, password, ...createUser } = createUserDto;
 
-    const userExist = await this.dbPrisma.user.findFirst({
-      where: { email: createUser.email },
-    });
-
-    if (userExist) {
-      throw new ConflictException('User already registered');
-    }
     password = await bcrypt.hash(password, await bcrypt.genSalt());
 
     const sectorFound = await this.dbPrisma.sector.findUnique({
@@ -34,9 +27,20 @@ export class UserService {
       throw new NotFoundException('Enter a valid sector');
     }
 
-    return await this.dbPrisma.user.create({
-      data: { ...createUser, password, sectorId: sectorFound.id },
-    });
+    try {
+      return await this.dbPrisma.user.create({
+        data: { ...createUser, password, sectorId: sectorFound.id },
+      });
+    } catch (_err) {
+      if (
+        _err instanceof Prisma.PrismaClientKnownRequestError &&
+        _err.code === 'P2002'
+      ) {
+        throw new ConflictException('This email is already registered.');
+      }
+
+      throw _err;
+    }
   }
 
   async find(req) {
